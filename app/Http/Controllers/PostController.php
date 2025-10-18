@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -20,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -28,7 +31,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $data=
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'required|string|max:1000',
+        ]);
+
+        $image= $request['image']->store('posts','public');
+        $data['image'] = $image;
+        $data['slug'] = Str::random(10);
+        $data['description'] = $request->input('description');
+        $data['user_id'] = Auth::id();
+        Auth::user()->posts()->create($data);
+        return redirect()->back();
+        // $post = Post::create([
+        //     'user_id' => auth()->id(),
+        //     'image' => $request->file('image')->store('posts'),
+        //     'description' => $request->input('description'),
+        // ]);
+        // return redirect()->route('create_post')->with('success', 'Post created successfully.');
     }
 
     /**
