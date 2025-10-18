@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+Route::get('/', [PostController::class, 'index'])->name('home_page');
 Route::get('/p/create', [PostController::class, 'create'])->name('create_post')->middleware('auth');
 Route::post('/p/create',[PostController::class,'store'])->name('store_post')->middleware('auth');
 Route::get('/p/{post:slug}', [PostController::class, 'show'])->name('show_post');
