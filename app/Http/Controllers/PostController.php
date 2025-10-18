@@ -41,7 +41,7 @@ class PostController extends Controller
         $data['image'] = $image;
         $data['slug'] = Str::random(10);
         $data['description'] = $request->input('description');
-        $data['user_id'] = Auth::id();
+        // $data['user_id'] = Auth::id();
         Auth::user()->posts()->create($data);
         return redirect()->back();
         // $post = Post::create([
@@ -57,7 +57,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', compact('post'));
     }
 
     /**

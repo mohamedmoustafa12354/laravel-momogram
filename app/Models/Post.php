@@ -24,4 +24,6 @@ protected $fillable = [
     {
         return $this->hasMany(Comment::class); 
     }   
+
+    
 }
