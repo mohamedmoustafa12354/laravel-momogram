@@ -22,3 +22,7 @@ require __DIR__.'/auth.php';
 Route::get('/p/create', [PostController::class, 'create'])->name('create_post')->middleware('auth');
 Route::post('/p/create',[PostController::class,'store'])->name('store_post')->middleware('auth');
 Route::get('/p/{post:slug}', [PostController::class, 'show'])->name('show_post');
+Route::post('/p/{post:slug}/comment', [App\Http\Controllers\CommentController::class, 'store'])->name('store_comment')->middleware('auth');
+Route::get('/p/{post:slug}/edit', [PostController::class, 'edit'])->name('edit_post')->middleware('auth');
+Route::post('/p/{post:slug}/update', [PostController::class, 'update'])->name('update_post')->middleware('auth');
+Route::delete('/p/{post:slug}/delete', [PostController::class, 'destroy'])->name('delete_post')->middleware('auth');
